@@ -1,0 +1,274 @@
+baseURL = "https://example.com/"
+
+title = "Neso"
+copyright = "© babeneso"
+
+enableRobotsTXT                = true
+
+mainSections                   = ["docs"]
+pluralizeListTitles            = false
+
+timeZone                       = "Asia/Taipei"
+languageCode                   = "en-us"
+defaultContentLanguage         = "en"
+defaultContentLanguageInSubdir = false
+
+# not required if theme was installed via hugo module
+#theme                          = "hugo-neso"
+
+[outputs]
+  home                         = ["html", "json"]
+  section                      = ["html"]
+
+[minify]
+  minifyOutput = true
+
+[build]
+  [build.buildStats]
+    enable = true
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+[module]
+#  replacements = "github.com/babeneso/hugo-neso -> ../../hugo-neso"
+  [[module.imports]]
+    path = "github.com/babeneso/hugo-neso"
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'
+
+
+[pagination]
+  # set a small number to demo pagination
+  pagerSize = 6
+
+
+[taxonomies]
+  tag        = "tags"
+  category   = "categories"
+#  series     = "series"
+
+
+# --------------------------------
+# i18n & Language-Specific Theme Settings
+# --------------------------------
+
+[languages]
+  [languages.en]
+    disabled          = false
+    languageCode      = "en-us"
+    languageDirection = "ltr"
+    languageName      = "English"
+    hasCJKLanguage    = false
+    title             = "Neso"
+    weight            = 1
+  [languages.zh-tw]
+    disabled          = false
+    languageCode      = "zh-tw"
+    languageDirection = "ltr"
+    languageName      = "中文"
+    hasCJKLanguage    = true
+    title             = "Neso"
+    weight            = 2
+    [languages.zh-tw.params]
+      [languages.zh-tw.params.neso]
+        time_format                        = "2006 年 1 月 2 日"
+        [languages.zh-tw.params.neso.social]
+          [[languages.zh-tw.params.neso.social.links]]
+            name                           = "Github"
+            url                            = "https://github.com/babeneso"
+          [[languages.zh-tw.params.neso.social.links]]
+            name                           = "Instagram"
+            url                            = "https://instagram.com/babeneso"
+          [[languages.zh-tw.params.neso.social.links]]
+            name                           = "X"
+            url                            = "https://x.com/"
+          [[languages.zh-tw.params.neso.social.links]]
+            name                           = "OnlyFans"
+            url                            = "nah"
+        [languages.zh-tw.params.neso.home]
+          #display_mode                     = "profile"
+          [languages.zh-tw.params.neso.home.profile]
+            avatar_image_alt_text          = "奶獸的大頭貼"
+            [[languages.zh-tw.params.neso.home.profile.link_btns]]
+              label                        = "使用說明"
+              url                          = "docs/"
+            [[languages.zh-tw.params.neso.home.profile.link_btns]]
+              label                        = "GitHub Repo"
+              url                          = "https://github.com/babeneso/hugo-neso/"
+        [languages.zh-tw.params.neso.seo]
+          site_description                 = "Neso 是設計簡潔、現代的 Hugo 佈景主題；內建 Tailwind、載入快速、完整 RWD 與明／暗色模式，採參數化 CSS 易於客製，並具備穩健的 SEO。"
+          site_keywords                    = ["Hugo", "SSG", "部落格", "blog", "Tailwind", "深色模式", "個人網站", "作品集", "Markdown", "前端", "設計"]
+          site_author                      = ["奶獸"]
+        [languages.zh-tw.params.neso.search]
+          input_placeholder                = "標題、關鍵字⋯"
+
+
+# --------------------------------
+# Site Navigation
+# --------------------------------
+
+[languages.en.menus]
+  [[languages.en.menus.main]]
+    identifier = "docs"
+    name       = "Docs"
+    pageRef    = "/docs"
+    weight     = 10
+  [[languages.en.menus.main]]
+    identifier = "tags"
+    name       = "Tags"
+    pageRef    = "/tags"
+    weight     = 20
+#  [[languages.en.menus.main]]
+#    identifier = "series"
+#    name       = "Series"
+#    pageRef    = "/series"
+#    weight     = 30
+  [[languages.en.menus.main]]
+    identifier = "archives"
+    name       = "Archives"
+    pageRef    = "/archives"
+    weight     = 40
+  [[languages.en.menus.main]]
+    identifier = "search"
+    name       = "Search"
+    pageRef    = "/search"
+    weight     = 50
+
+[languages.zh-tw.menus]
+  [[languages.zh-tw.menus.main]]
+    identifier = "docs"
+    name       = "使用說明"
+    pageRef    = "/docs"
+    weight     = 10
+  [[languages.zh-tw.menus.main]]
+    identifier = "tags"
+    name       = "標籤"
+    pageRef    = "/tags"
+    weight     = 20
+#  [[languages.zh-tw.menus.main]]
+#    identifier = "series"
+#    name       = "系列文"
+#    pageRef    = "/series"
+#    weight     = 30
+  [[languages.zh-tw.menus.main]]
+    identifier = "archives"
+    name       = "內容彙整"
+    pageRef    = "/archives"
+    weight     = 40
+  [[languages.zh-tw.menus.main]]
+    identifier = "search"
+    name       = "搜尋"
+    pageRef    = "/search"
+    weight     = 50
+
+
+# --------------------------------
+# Markdown Rendering
+# --------------------------------
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      # 必要：不要把 <img> 包在 <p> 裡面 (以便透過 `{width="100" ...}` 設定屬性)
+      # https://gohugo.io/content-management/markdown-attributes/#standalone-images
+      wrapStandAloneImageWithinParagraph = false
+      [markup.goldmark.parser.attribute]
+      # 允許使用 `{class="foo bar" id="baz"}` 或 `{.foo .bar #baz}` 語法，為 Markdown 元素增加 HTML 元素屬性 (不限 class / ID)
+      # https://gohugo.io/content-management/markdown-attributes/
+        # 允許區塊元素使用
+        block                    = true
+        # 支援標題元素使用
+        title                    = true
+    [markup.goldmark.renderer]
+      unsafe                     = true
+  [markup.highlight]
+    # 必要：讓程式碼區塊使用 CSS class，以便語法上色
+    # https://gohugo.io/configuration/markup/#highlight
+    noClasses                    = false
+  [markup.tableOfContents]
+  # 目次樣式設定
+  # https://gohugo.io/configuration/markup/#table-of-contents
+    startLevel = 2
+    endLevel = 3
+
+
+# ================================
+# Theme Settings
+# ================================
+
+[params]
+  [params.neso]
+    time_format                        = "January 2, 2006"
+    show_breadcrumbs                   = true
+    ext_link_indicator                 = true
+    ext_link_no_opener_referrer        = true
+    ext_link_new_window                = true
+    [params.neso.branding]
+      logo_text                        = "Neso"
+      hide_logo_text                   = false
+      logo_image                       = "img/logo.svg"
+      logo_image_dark                  = "img/logo_dark.svg"
+      og_image                         = "img/metadata/ogimg.png"
+      favicon_ico                      = "favicon.ico"
+      favicon_svg                      = "img/metadata/favicon.svg"
+      apple_touch_icon                 = "img/metadata/apple-touch-icon.png"
+      pwa_short_title                  = "Neso"
+      pwa_theme_color_light            = "#f5f6f7"
+      pwa_theme_color_dark             = "#000000"
+      pwa_icon_svg                     = "img/metadata/pwa-icon.svg"
+      pwa_icon_192                     = "img/metadata/pwa-icon-192.png"
+      pwa_icon_512                     = "img/metadata/pwa-icon-512.png"
+      pwa_icon_maskable_svg            = "img/metadata/pwa-icon-maskable.svg"
+      pwa_icon_maskable_192            = "img/metadata/pwa-icon-maskable-192.png"
+      pwa_icon_maskable_512            = "img/metadata/pwa-icon-maskable-512.png"
+    [params.neso.social]
+      [[params.neso.social.links]]
+        name                           = "Github"
+        url                            = "https://github.com/babeneso"
+      [[params.neso.social.links]]
+        name                           = "Instagram"
+        url                            = "https://instagram.com/babeneso"
+      [[params.neso.social.links]]
+        name                           = "X"
+        url                            = "https://x.com/"
+      [[params.neso.social.links]]
+        name                           = "OnlyFans"
+        url                            = "nah"
+    [params.neso.home]
+      display_mode                     = "profile"
+      [params.neso.home.list]
+        featured_entries_limit         = 2
+      [params.neso.home.profile]
+        avatar_image                   = "img/avatar.png"
+        avatar_image_alt_text          = "Neso's profile photo"
+        [[params.neso.home.profile.link_btns]]
+          label                        = "Docs"
+          url                          = "docs/"
+        [[params.neso.home.profile.link_btns]]
+          label                        = "GitHub Repo"
+          url                          = "https://github.com/babeneso/hugo-neso/"
+    [params.neso.list]
+      prominent_first_entry            = true
+    [params.neso.page]
+      ext_link_indicator               = true
+      ext_link_no_opener_referrer      = true
+      ext_link_new_window              = true
+      show_breadcrumbs                 = true
+      show_prev_next                   = true
+      show_share                       = true
+      share_providers                  = ["facebook", "linkedin", "reddit", "x"]
+    [params.neso.seo]
+      site_description                 = "Neso is a clean, modern Hugo theme with Tailwind built in — fast, fully responsive, light/dark ready, and easy to customize with parameterized CSS and solid SEO."
+      site_keywords                    = ["Hugo", "SSG", "Blog", "Tailwind", "Dark Mode", "Personal Website", "Portfolio", "Markdown", "Front End", "Design"]
+      site_author                      = ["Neso"]
+
+    [params.neso.search]
+      input_placeholder                = "Title, keywords..."

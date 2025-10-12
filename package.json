@@ -1,0 +1,12 @@
+{
+  "name": "neso-demo-site",
+  "version": "0.1.0",
+  "description": "Demo website for Neso Hugo theme.",
+  "scripts": {},
+  "author": "babeneso",
+  "license": "MIT",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.14",
+    "tailwindcss": "^4.1.14"
+  }
+}

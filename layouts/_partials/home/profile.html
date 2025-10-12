@@ -1,0 +1,116 @@
+{{- $uiIcons := partialCached "_funcs/get-ui-icons.html" . }}
+{{- $outDir := site.Params.neso.assets.output_dir | default "assets" }}
+
+{{- $profile := site.Params.neso.home.profile }}
+
+{{- with $profile }}
+
+    {{- if .avatar_image }}
+
+        {{- /* 1) <figure> container size (1x, CSS) */}}
+        {{- $size     := int (.avatar_image_size | default 160) }}
+        {{- $sizeSm   := int (.avatar_image_size_sm | default 128) }}
+        {{- $figClass := printf "not-last:mb-r-lg size-[%dpx] md:size-[%dpx] overflow-clip" $sizeSm $size }}
+        {{- $imgClass := "size-full object-cover" }}
+
+        {{- /* absolute url or asset? */}}
+        {{- $isAbs := (urls.Parse .avatar_image).IsAbs }}
+        {{- $img := resources.Get .avatar_image }}
+
+        {{- if and (not $isAbs) $img }}
+        {{- /* asset image: inspect & process */}}
+
+            {{- /* detect short side */}}
+            {{- $isPortrait := le $img.Width $img.Height }}
+
+            {{- /* retina 2x: set short side to size*2, keep aspect */}}
+            {{- $processable := slice "jpg" "jpeg" "png" "tif" "bmp" "gif" }}
+            {{- if hugo.IsExtended }}{{- $processable = $processable | append "webp" }}{{- end }}
+            {{- $target := mul $size 2 }}
+            {{- $out    := $img }}
+            {{- $url    := "" }}
+            {{- if and (in $processable $img.MediaType.SubType) hugo.IsProduction }}
+                {{- if $isPortrait }}
+                    {{- $out = $img.Resize (printf "%dx" $target) }}
+                {{- else }}
+                    {{- $out = $img.Resize (printf "x%d" $target) }}
+                {{- end }}
+                {{- $out = $out | resources.Copy (path.Join $outDir $img.Name) }}
+                {{- if not site.Params.neso.assets.disable_fingerprinting }}
+                    {{- $fp  := $out | fingerprint }}
+                    {{- $url = absURL $fp.RelPermalink }}
+                {{- else }}
+                    {{- $url = absURL $out.RelPermalink }}
+                {{- end }}
+            {{- end }}
+
+            <figure class="{{ $figClass }}">
+                <img class="{{ $imgClass }}"
+                     fetchpriority="high"
+                     src="{{ $url }}"
+                     width="{{ $size }}" height="{{ $size }}"
+                     {{- with .avatar_image_alt_text }}
+                     alt="{{ . }}"
+                     {{- end }}>
+            </figure>
+
+        {{- else }}
+        {{- /* external image: skip hugo pipes */}}
+
+            <figure class="{{ $figClass }}">
+                <img class="{{ $imgClass }}"
+                     fetchpriority="high"
+                     src="{{ .avatar_image | absURL }}"
+                     width="{{ $size }}" height="{{ $size }}"
+                     {{- with .avatar_image_alt_text }}
+                     alt="{{ . }}"
+                     {{- end }}>
+            </figure>
+
+        {{- end }}
+
+    {{- end }}
+
+    <div class="text-center">
+        <h1 class="not-last:mb-r-md font-bold text-3xl md:text-4xl text-neso-fg1">
+            {{ $.Title | default site.Title | markdownify }}
+        </h1>
+        {{- with $.Description | default site.Params.neso.seo.site_description }}
+            <div class="not-last:mb-r-lg text-lg neso-shine">
+                {{ . | markdownify }}
+            </div>
+        {{- end }}
+
+        {{- partial "home/social_icons.html" (dict "align" "center") }}
+
+        {{- with .link_btns }}
+            <div class="not-last:mb-r-lg flex flex-wrap justify-center gap-3">
+                {{- range . }}
+                    {{- $siteHost   := (urls.Parse site.BaseURL).Host }}
+                    {{- $u          := urls.Parse .url }}
+                    {{- $isExternal := and $u.IsAbs (ne $u.Host $siteHost) }}
+                    <a class="btn flex flex-nowrap gap-1 items-center"
+                       href="{{ .url | safeURL }}"
+                       title="{{ .label }}"
+                       {{- if $isExternal }}
+                       {{- if site.Params.neso.ext_link_no_opener_referrer }}
+                       rel="external noreferrer noopener"
+                       {{- end }}
+                       {{- if site.Params.neso.ext_link_new_window }}
+                       target="_blank"
+                       {{- end }}
+                       {{- end -}}
+                    >
+                        <span>{{ .label }}</span>
+                    
+                        {{- if and $isExternal site.Params.neso.ext_link_indicator }}
+                            <svg class="shrink-0 grow-0 size-[1em] stroke-2 stroke-current fill-none">
+                                <use href="{{ $uiIcons.RelPermalink }}#external-link"/>
+                            </svg>
+                        {{- end }}
+                    </a>
+                {{- end }}
+            </div>
+        {{- end }}
+    </div>
+{{- end -}}

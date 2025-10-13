@@ -23,6 +23,9 @@ defaultContentLanguageInSubdir = false
 [minify]
   minifyOutput = true
 
+[imaging]
+  resampleFilter = 'Lanczos'
+
 [build]
   [build.buildStats]
     enable = true
@@ -257,6 +260,7 @@ defaultContentLanguageInSubdir = false
           url                          = "https://github.com/babeneso/hugo-neso/"
     [params.neso.list]
       prominent_first_entry            = true
+      disable_responsive_cover_image   = false
     [params.neso.page]
       ext_link_indicator               = true
       ext_link_no_opener_referrer      = true

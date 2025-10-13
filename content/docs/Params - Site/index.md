@@ -191,9 +191,15 @@ The following explains the homepage settings in detail.
     
     <dl>
         <dt>{{< highlight toml "hl_inline=true" >}}display_mode = "profile"{{< /highlight >}}</dt>
-        <dd>Show avatar, title, bio text, plus social links and custom link buttons, with a centered layout. This mode is simpler and does not use the Index file's main content.</dd>
+        <dd>
+            {{< figure src="home-profile.png" >}}
+            <p>Show avatar, title, bio text, plus social links and custom link buttons, with a centered layout. This mode is simpler and does not use the Index file's main content.</p>
+        </dd>
         <dt>{{< highlight toml "hl_inline=true" >}}display_mode = "intro"{{< /highlight >}}</dt>
-        <dd>Show the title, social links, and the Index file's main content, laid out according to the language's writing direction.</dd>
+        <dd>
+            {{< figure src="home-intro.png" >}}
+            <p>Show the title, social links, and the Index file's main content, laid out according to the language's writing direction.</p>
+        </dd>
         <dt>{{< highlight toml "hl_inline=true" >}}display_mode = "<any other string>"{{< /highlight >}}</dt>
         <dd>
             <p>Highly customizable mode; only the Index file's main content is shown.</p>

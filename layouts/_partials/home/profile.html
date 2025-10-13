@@ -27,21 +27,28 @@
             {{- $processable := slice "jpg" "jpeg" "png" "tif" "bmp" "gif" }}
             {{- if hugo.IsExtended }}{{- $processable = $processable | append "webp" }}{{- end }}
             {{- $target := mul $size 2 }}
-            {{- $out    := $img }}
-            {{- $url    := "" }}
+            {{- $out    := $img | resources.Copy (path.Join $outDir $img.Name) }}
             {{- if and (in $processable $img.MediaType.SubType) hugo.IsProduction }}
                 {{- if $isPortrait }}
-                    {{- $out = $img.Resize (printf "%dx" $target) }}
+                    {{- if hugo.IsExtended }}
+                        {{- $out = $out.Resize (printf "%dx webp" $target) }}
+                    {{- else }}
+                        {{- $out = $out.Resize (printf "%dx" $target) }}
+                    {{- end }}
                 {{- else }}
-                    {{- $out = $img.Resize (printf "x%d" $target) }}
+                    {{- if hugo.IsExtended }}
+                        {{- $out = $out.Resize (printf "x%d webp" $target) }}
+                    {{- else }}
+                        {{- $out = $out.Resize (printf "x%d" $target) }}
+                    {{- end }}
                 {{- end }}
-                {{- $out = $out | resources.Copy (path.Join $outDir $img.Name) }}
-                {{- if not site.Params.neso.assets.disable_fingerprinting }}
-                    {{- $fp  := $out | fingerprint }}
-                    {{- $url = absURL $fp.RelPermalink }}
-                {{- else }}
-                    {{- $url = absURL $out.RelPermalink }}
-                {{- end }}
+            {{- end }}
+            {{- $url    := "" }}
+            {{- if not site.Params.neso.assets.disable_fingerprinting }}
+                {{- $fp  := $out | fingerprint }}
+                {{- $url = $fp.RelPermalink }}
+            {{- else }}
+                {{- $url = $out.RelPermalink }}
             {{- end }}
 
             <figure class="{{ $figClass }}">

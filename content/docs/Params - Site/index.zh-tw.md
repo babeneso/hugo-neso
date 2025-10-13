@@ -192,9 +192,15 @@ params:
     
     <dl>
         <dt>{{< highlight toml "hl_inline=true" >}}display_mode = "profile"{{< /highlight >}}</dt>
-        <dd>顯示大頭照、標題、自介文字、以及社群連結和自訂連結按鈕，置中排版。此模式較簡潔，不會採用 Index 檔的主要內容。</dd>
+        <dd>
+            {{< figure src="home-profile.png" >}}
+            <p>顯示大頭照、標題、自介文字、以及社群連結和自訂連結按鈕，置中排版。此模式較簡潔，不會採用 Index 檔的主要內容。</p>
+        </dd>
         <dt>{{< highlight toml "hl_inline=true" >}}display_mode = "intro"{{< /highlight >}}</dt>
-        <dd>顯示標題、社群連結、Index 檔的主要內容，依語系書寫方向排版。</dd>
+        <dd>
+            {{< figure src="home-intro.png" >}}
+            <p>顯示標題、社群連結、Index 檔的主要內容，依語系書寫方向排版。</p>
+        </dd>
         <dt>{{< highlight toml "hl_inline=true" >}}display_mode = "<其他任何字串>"{{< /highlight >}}</dt>
         <dd>
             <p>高度自訂模式，僅顯示 Index 檔的主要內容。</p>

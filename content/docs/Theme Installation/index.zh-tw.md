@@ -190,10 +190,10 @@ node_modules/
 
     (日後要更新也是使用這個指令)
 
-    如果你想鎖定在 / 更新到[特定版本](https://github.com/babeneso/hugo-neso/releases) (範例為鎖定 `v0.1.2`)：
+    如果你想鎖定在 / 更新到[特定版本](https://github.com/babeneso/hugo-neso/releases) (範例為鎖定 `v0.1.3`)：
 
     ```shell {linenos=true data-prompt=true}
-    hugo mod get github.com/babeneso/hugo-neso@v0.1.2
+    hugo mod get github.com/babeneso/hugo-neso@v0.1.3
     ```
 
 4. 建議再順手執行這個指令，清理不必要的資訊：

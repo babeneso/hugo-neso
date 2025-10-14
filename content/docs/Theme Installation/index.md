@@ -189,10 +189,10 @@ This approach keeps your project clean and makes updates easy: Hugo fetches the 
 
     (Use this same command later when you want to update.)
 
-    If you prefer to pin or update to a [specific release](https://github.com/babeneso/hugo-neso/releases) (example pins to `v0.1.2`):
+    If you prefer to pin or update to a [specific release](https://github.com/babeneso/hugo-neso/releases) (example pins to `v0.1.3`):
 
     ```shell {linenos=true data-prompt=true}
-    hugo mod get github.com/babeneso/hugo-neso@v0.1.2
+    hugo mod get github.com/babeneso/hugo-neso@v0.1.3
     ```
 
 4. It’s a good idea to run the next command to clean up unused entries in go.mod and go.sum:
